@@ -2,6 +2,7 @@ package com.example.todo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 @Entity
@@ -18,9 +19,11 @@ public class Todo {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Setter
     @Column(nullable = false)
     private int priority = 0;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "todo_status DEFAULT 'TODO'")
     private TodoStatus status;
@@ -31,13 +34,5 @@ public class Todo {
 
     public Todo() {
 
-    }
-
-    public void setStatus(TodoStatus status) {
-        this.status = status;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
     }
 }
