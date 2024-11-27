@@ -2,8 +2,10 @@ package com.example.todo.service;
 
 import com.example.todo.entity.Todo;
 import com.example.todo.repository.TodoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +22,29 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-    public Optional<Todo> getATodo(Long todoId){
-        return todoRepository.findById(todoId);
+    public Todo getATodo(Long todoId){
+        Optional<Todo> existingTodo = todoRepository.findById(todoId);
+        if(existingTodo.isPresent()){
+            return existingTodo.get();
+        }else {
+        throw new EntityNotFoundException("Todo to fetch not found");
+        }
     }
 
-    public void UpdateATodo(Todo updatedTodo){
-        //todo: update code Logic !
+    public Todo UpdateATodo(Long id, Todo updatedTodo){
+        Optional<Todo> todoToUpdate = todoRepository.findById(id);
+
+        if(todoToUpdate.isPresent()){
+            Todo oldTodo = todoToUpdate.get();
+            oldTodo.setTitle(updatedTodo.getTitle());
+            oldTodo.setDescription(updatedTodo.getDescription());
+            oldTodo.setStatus(updatedTodo.getStatus());
+            oldTodo.setPriority(updatedTodo.getPriority());
+
+            return todoRepository.save(oldTodo);
+        }else{
+            throw new EntityNotFoundException("Todo to update not found");
+        }
     }
 
     public void deleteATodo(Long todoId){
