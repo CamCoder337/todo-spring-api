@@ -3,6 +3,7 @@ package com.example.todo.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 @Entity
@@ -25,7 +26,8 @@ public class Todo {
 
     @Setter
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "todo_status DEFAULT 'TODO'")
+    @Value("TODO")
+    @Column(nullable = false)
     private TodoStatus status;
 
     public Todo(Long id) {
