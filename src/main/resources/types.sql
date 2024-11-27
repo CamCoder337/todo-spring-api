@@ -1,1 +1,1 @@
-CREATE TYPE IF NOT EXIST todo_status AS ENUM ('TODO', 'DOING', 'DONE');
+CREATE TYPE todo_status AS ENUM ('TODO', 'DONE', 'IN_PROGRESS');
